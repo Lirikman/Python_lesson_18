@@ -2,7 +2,9 @@ from sqlalchemy import Column, Integer, String, Float, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-engine = create_engine('sqlite:///my_database.db', echo=True)
+sql_database = 'sqlite:///base.db'
+engine = create_engine(sql_database, echo=True)
+
 
 Base = declarative_base()
 
@@ -32,11 +34,11 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 vac_1 = Vac('Москва', 'Программист Python', 'Знание языка Python, знание SQL, Flask, Django', 120000)
-vac_2 = Vac('Санкт-Петербург', 'Программист 1С', 'Знание 1С', 18 0000)
+vac_2 = Vac('Санкт-Петербург', 'Программист 1С', 'Знание 1С', 180000)
 
-#session.add(vac_1)
-#session.add(vac_2)
-#session.commit()
+session.add(vac_1)
+session.add(vac_2)
+session.commit()
 
 vac_query = session.query(Vac)
 for vac in vac_query:

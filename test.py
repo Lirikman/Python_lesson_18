@@ -1,19 +1,20 @@
 from sqlalchemy import create_engine, MetaData, Table
-from sqlalchemy.orm import mapper, sessionmaker
+from sqlalchemy.orm import registry, sessionmaker
 
 
 class Vac(object):
     pass
 
 
-def loadSession(db):
-    engine = create_engine(f'sqlite:///{db}', echo=True)
-    metadata = MetaData(engine)
-    vac_params = Table('vacancies', metadata, autoload=True)
+def loadSession():
+    engine = create_engine('sqlite:///base.db', echo=True)
+    metadata = MetaData()
+    vac_params = Table('vacancies', metadata, autoload_with=engine)
 
     print(type(vac_params), vac_params.unique_params)
 
-    mapper(Vac, vac_params)
+    mapper_reg = registry()
+    mapper_reg.map_imperatively(Vac, vac_params)
 
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -21,9 +22,8 @@ def loadSession(db):
 
 
 if __name__ == '__main__':
-    db = 'my_database.db'
-    session = loadSession(db)
-    vac_query = session.query(Vac).all()
+    session = loadSession()
+    vacs_query = session.query(Vac).all()
 
-    for vac in vac_query:
+    for vac in vacs_query:
         print(vac)
