@@ -26,6 +26,34 @@
     {% endfor %}
 </table>
 <br>
+<form method="post">
+    <label class="title_add">Ручное добавление записи в базу данных</label>
+    <br><br>
+    <label class="label_m">Выберите город:</label>
+        <select name = 'city_m'>
+            <option value="54">Красноярск</option>
+            <option value="4">Новосибирск</option>
+            <option value="90">Томск</option>
+            <option value="68">Омск</option>
+        </select>
+    <br><br>
+    <label class="label_m">Выберите профессию:</label>
+        <select>
+            <option value="Программист Python">Программист Python</option>
+            <option value="Программист 1С">Программист 1С</option>
+            <option value="Системный администратор">Системный администратор</option>
+            <option value="Веб дизайнер">Веб дизайнер</option>
+        </select>
+    <br><br>
+    <label class="label_m"> Введите нужные навыки:</label>
+    <input type="text" name="skills_m">
+    <br><br>
+    <label class="label_m">Введите размер заработной платы:</label>
+    <input type="text" name="salary_m">
+    <br><br>
+    <input type="submit" value="ОТПРАВИТЬ">
+</form>
+<br><br>
 <form action="/delete.html" method="post">
     <label class="rect">Выберите номер для удаления записи:</label>
     <select class="select" name="number">

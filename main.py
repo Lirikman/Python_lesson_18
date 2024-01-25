@@ -150,6 +150,11 @@ def base():
         return render_template('base.html', all_str=all_str, all_id=all_id)
 
 
+@app.route('/add.html', methods=['POST', 'GET'])
+def add_rec():
+    if request.method == 'POST':
+        return redirect('base.html')
+
 @app.route('/delete.html', methods=['POST', 'GET'])
 def delete():
     if request.method == 'POST':
