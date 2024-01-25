@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>База данных</title>
+    <link href="/static/css/base.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h1 class="title">База данных SQLite</h1>
+<table class="table" align="center" border="1">
+    <tr>
+        <th class="th">№</th>
+        <th class="th">Город</th>
+        <th class="th">Профессия</th>
+        <th class="th">Навыки</th>
+        <th class="th">Зарплата</th>
+    </tr>
+    {% for s in all_str%}
+    <tr>
+        <td class="td">{{s.id}}</td>
+        <td class="td">{{s.city}}</td>
+        <td class="td">{{s.vac}}</td>
+        <td class="td">{{s.text}}</td>
+        <td class="td">{{s.salary}} руб.</td>
+    </tr>
+    {% endfor %}
+</table>
+<br>
+<form action="/delete.html" method="post">
+    <label class="rect">Выберите номер для удаления записи:</label>
+    <select class="select" name="number">
+        {% for s in all_id%}
+        <option>{{s}}</option>
+        {% endfor %}
+    </select>
+    <input  class="delete" type="submit" value="Удалить">
+</form>
+<br><br>
+<a class="btn" align="center" href="index.html">Описание проекта</a>
+<a class="btn" align="center" href="parsing.html">Парсинг</a>
+</body>
+</html>
