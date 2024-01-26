@@ -128,12 +128,11 @@ def base():
             if len(text) > 5:
                 if text[0] == 'Опыт':
                     skills.remove(i)
-        random_skills = random.sample(skills, 4)
+        random_skills = random.sample(skills, 3)
         skill_1 = random_skills[0]
         skill_2 = random_skills[1]
         skill_3 = random_skills[2]
-        skill_4 = random_skills[3]
-        skill_txt = str(skill_1) + '\n' + str(skill_2) + '\n' + str(skill_3) + '\n' + str(skill_4)
+        skill_txt = str(skill_1) + '\n' + str(skill_2) + '\n' + str(skill_3)
 
         s = Vac(city=city, vac=vac_text, text=skill_txt, salary=average_salary)
 
