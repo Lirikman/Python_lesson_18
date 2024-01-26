@@ -153,6 +153,17 @@ def base():
 @app.route('/add.html', methods=['POST', 'GET'])
 def add_rec():
     if request.method == 'POST':
+        city = request.form['city_m']
+        vac = request.form['vac_m']
+        skills = request.form['skills_m']
+        salary = request.form['salary_m']
+        s = Vac(city=city, vac=vac, text=skills, salary=salary)
+        try:
+            session.add(s)
+            session.commit()
+        except:
+            session.rollback()
+            return 'Ошибка добавления записи в БД'
         return redirect('base.html')
 
 @app.route('/delete.html', methods=['POST', 'GET'])

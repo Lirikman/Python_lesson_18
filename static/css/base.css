@@ -53,10 +53,32 @@ body{
 .label_m{
     width: 5cm;
     height: 45px;
-    border: 2px solid;
+    border: 3px solid;
     margin:  5px auto;
-    background: #0000CD;
-    color:#FF00FF;
+    background: #ADFF2F;
+    color: #B22222;
+    font-family: Verdana, "Times New Roman", serif;
+    font-size: 16pt
+    }
+
+.label_t{
+    width: 10cm;
+    height: 40px;
+    border: 3px solid;
+    margin:  5px auto;
+    background: #ADFF2F;
+    color: #B22222;
+    font-family: Verdana, "Times New Roman", serif;
+    font-size: 16pt
+    }
+
+.but_add{
+    width: 7cm;
+    height: 45px;
+    border: 3px solid;
+    margin:  5px auto;
+    background: #FF00FF;
+    color: #00FFFF;
     font-family: Verdana, "Times New Roman", serif;
     font-size: 16pt
     }
