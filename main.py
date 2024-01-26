@@ -36,19 +36,6 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 
-# vac_1 = Vac('Москва', 'Программист Python', 'Знание языка Python, знание SQL, Flask, Django', 120000)
-# vac_2 = Vac('Санкт-Петербург', 'Программист 1С', 'Знание 1С', 180000)
-
-
-# session.add(vac_1)
-# session.add(vac_2)
-# session.commit()
-
-# vac_query = session.query(Vac)
-# for vac in vac_query:
-#    print(vac)
-
-
 @app.route('/')
 @app.route('/index.html')
 def index():
@@ -100,7 +87,7 @@ def base():
             all_salary += summ_salary
             all_vac += count_vac
         average_salary = all_salary // all_vac
-        # Выбор 4 рандомных навыков
+        # Выбор 3 рандомных навыков
         all_skills = []
         for i in vac_json:
             items = i['items']
