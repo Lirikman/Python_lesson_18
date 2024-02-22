@@ -1,9 +1,9 @@
 import random
 import requests
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, validates
 
 app = Flask(__name__)
 sql_database = 'sqlite:///base.db'
@@ -136,15 +136,20 @@ def base():
         return render_template('base.html', all_str=all_str, all_id=all_id)
 
 
+# Ручное добавление записи В БД
 @app.route('/add.html', methods=['POST', 'GET'])
 def add_rec():
     if request.method == 'POST':
-        city = request.form['city_m']
-        vac = request.form['vac_m']
-        skills = request.form['skills_m']
-        salary = request.form['salary_m']
-        s = Vac(city=city, vac=vac, text=skills, salary=salary)
         try:
+            city = request.form['city_m']
+            vac = request.form['vac_m']
+            skills = request.form['skills_m']
+            if skills.isdigit():
+                flash('Описание должно содержать текст!')
+            salary = request.form['salary_m']
+            if not salary.isdigit():
+                flash('Уровень заработной платы должен быть целым числом')
+            s = Vac(city=city, vac=vac, text=skills, salary=salary)
             session.add(s)
             session.commit()
         except:
@@ -152,6 +157,8 @@ def add_rec():
             return 'Ошибка добавления записи в БД'
         return redirect('base.html')
 
+
+# Удаление записи из БД
 @app.route('/delete.html', methods=['POST', 'GET'])
 def delete():
     if request.method == 'POST':
