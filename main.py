@@ -3,9 +3,10 @@ import requests
 from flask import Flask, render_template, request, redirect, flash
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, validates
+from sqlalchemy.orm import sessionmaker
 
 app = Flask(__name__)
+app.secret_key = 'ILoveYouPython'
 sql_database = 'sqlite:///base.db'
 engine = create_engine(sql_database, echo=True)
 Base = declarative_base()
@@ -86,7 +87,10 @@ def base():
                         summ_salary += s['from']
             all_salary += summ_salary
             all_vac += count_vac
-        average_salary = all_salary // all_vac
+        try:
+            average_salary = all_salary // all_vac
+        except ZeroDivisionError:
+            average_salary = '0'
         # Выбор 3 рандомных навыков
         all_skills = []
         for i in vac_json:
@@ -140,22 +144,26 @@ def base():
 @app.route('/add.html', methods=['POST', 'GET'])
 def add_rec():
     if request.method == 'POST':
-        try:
-            city = request.form['city_m']
-            vac = request.form['vac_m']
-            skills = request.form['skills_m']
-            if skills.isdigit():
-                flash('Описание должно содержать текст!')
-            salary = request.form['salary_m']
-            if not salary.isdigit():
-                flash('Уровень заработной платы должен быть целым числом')
-            s = Vac(city=city, vac=vac, text=skills, salary=salary)
-            session.add(s)
-            session.commit()
-        except:
-            session.rollback()
-            return 'Ошибка добавления записи в БД'
-        return redirect('base.html')
+        city = request.form['city_m']
+        vac = request.form['vac_m']
+        skills = request.form['skills_m']
+        if skills.isdigit():
+            flash('Описание должно содержать текст!')
+            return redirect('base.html')
+        elif len(skills) < 15:
+            flash('Описание должно содержать хотя бы несколько слов!')
+            return redirect('base.html')
+        salary = request.form['salary_m']
+        if not salary:
+            salary = '0'
+        elif not salary.isdigit():
+            flash('Уровень заработной платы должен быть целым числом')
+            return redirect('base.html')
+        s = Vac(city=city, vac=vac, text=skills, salary=salary)
+        session.add(s)
+        session.commit()
+        flash('Данные успешно добавлены в БД')
+    return redirect('base.html')
 
 
 # Удаление записи из БД
@@ -169,9 +177,11 @@ def delete():
             try:
                 session.delete(record)
                 session.commit()
+                flash('Запись успешно удалена')
                 return redirect('base.html')
             except:
-                return 'Ошибка удаления записи из БД'
+                flash('Ошибка удаления записи из БД')
+                return redirect('base.html')
         else:
             return redirect('base.html')
     else:

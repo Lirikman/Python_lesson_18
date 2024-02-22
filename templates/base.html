@@ -25,13 +25,14 @@
     </tr>
     {% endfor %}
 </table>
-<br>
-{% for msg in get_flashed_messages() %}
-<div class="flash">{{msg}}</div>
-{% endfor %}
+<br><br>
 <form action="/add.html" method="post">
     <label class="title_add">Ручное добавление записи в базу данных</label>
     <br><br>
+    {% for msg in get_flashed_messages() %}
+    <div class="flash">{{msg}}</div>
+    {% endfor %}
+    <br>
     <label class="label_m">Выберите город:</label>
         <select class="label_t" name = 'city_m'>
             <option value="Красноярск">Красноярск</option>
